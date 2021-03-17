@@ -1,9 +1,12 @@
-
+import './default.sass'
+import Layout from './parts/Layout/Layout'
 
 function App() {
   return (
-    <div className="App">
-        
+    <div className="wrapper">
+        <Layout>
+            
+        </Layout>
     </div>
   );
 }
