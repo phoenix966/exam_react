@@ -5,7 +5,9 @@ function App() {
   return (
     <div className="wrapper">
         <Layout>
-            
+            <div className="empty__block">
+                
+            </div>
         </Layout>
     </div>
   );

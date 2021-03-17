@@ -2,14 +2,17 @@ import React from 'react'
 import Social from '../../components/social/Social'
 import Widget from '../../components/widget/Widget'
 import './footer.sass'
+import {FaHeart} from 'react-icons/fa'
+import logo from '../../assets/img/logo.png'
 
 function Footer() {
     return (
+    <>
         <div className="footer">
             <div className="container footer__container">
                 <div className="footer__wrap">
                     <div className="footer__logo">
-                        <img src="img/logo.png" alt="logo" className="footer__img"/>
+                        <img src={logo} alt="logo" className="footer__img"/>
                     </div>
                     <p className="footer__text">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel placeat natus voluptatum fugit deserunt dolorum enim aperiam neque nihil adipisci!
@@ -49,13 +52,15 @@ function Footer() {
                     </li>
                 </ul>
             </div>
-            <div className="container">
+            
+        </div>
+        <div className="container">
                 <p className="footer__copyright">
-                    Copyright ©2021 All rights reserved | This template is made with by Colorlib
+                    Copyright ©2021 All rights reserved | This template is made with <span><FaHeart/></span> by Colorlib
                 </p>
             </div>
-            <Social/>
-        </div>
+        <Social/>
+    </>
     )
 }
 

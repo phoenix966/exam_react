@@ -1,7 +1,10 @@
+@import ../../mixins
+
 .footer
+    font-family: 'Roboto-regular'
     background: #000
-    padding: 50px 0
-    border-bottom: 2px solid #ffffff80
+    padding: rem(50px) 0
+    // border-bottom: 2px solid #ffffff80
     height: 40%
     &__container
         display: flex
@@ -18,16 +21,18 @@
         color: #8c8c8c
         &:nth-of-type(1)
             color: #fff
-            margin: 30px 0       
+            margin: rem(30px) 0       
     &__text
-        width: 200px
+        width: rem(200px)
         color: #8c8c8c
     &__logo
-        padding-top: 50px
-        width: 100px
+        padding-top: rem(50px)
+        width: rem(100px)
     &__img
         width: 100%
     &__copyright
         color: #ffffff83
-        font-size: 12px
+        font-size: rem(12px)
         font-weight: italic
+        & span
+            color: red

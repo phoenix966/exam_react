@@ -1,3 +1,5 @@
+@import ./fonts
+
 html,body
     margin: 0
     padding: 0
@@ -11,15 +13,13 @@ html
     position: relative
     min-height: 100%
     overflow: hidden
-    
-
 .container
     margin: 0 auto
     max-width: 1000px
 
 body
     min-width: 320px
-    background: #1c1c1c
+    background: #000
 .list--reset
     // margin: 0
     padding: 0
@@ -27,9 +27,7 @@ body
 .link--reset
     text-decoration: none
 
-=media($size)
-    @media screen and (min-width: $size)
-      @content
-      
-@function rem($px)
-    @return $px / 16px + 0rem
+//tested
+.empty__block
+    height: 80vh
+    background: #201f1f
