@@ -1,16 +1,27 @@
+import SimpleSlider from './components/slider/SimpleSlider'
 import './default.sass'
+// import {Route,Switch} from 'react-router-dom'
+// import Header from './parts/Header/Header';
 import Layout from './parts/Layout/Layout'
 
 function App() {
+  
   return (
     <div className="wrapper">
         <Layout>
-            <div className="empty__block">
+            <SimpleSlider/>
+            {/* <div className="empty__block">
                 
-            </div>
+            </div> */}
+            {/* <Route path="/" render={()=>{
+              return <Header/>
+            }}/> */}
+  
+            
         </Layout>
     </div>
   );
 }
+
 
 export default App;
