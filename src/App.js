@@ -1,23 +1,29 @@
 import SimpleSlider from './components/slider/SimpleSlider'
 import './default.sass'
-// import {Route,Switch} from 'react-router-dom'
+import BlogList from './parts/BlogList/BlogList'
+import {Route,Switch} from 'react-router-dom'
 // import Header from './parts/Header/Header';
 import Layout from './parts/Layout/Layout'
+import Editor from './parts/Editor/Editor'
 
 function App() {
   
   return (
     <div className="wrapper">
         <Layout>
-            <SimpleSlider/>
+            {/* <SimpleSlider/> */}
             {/* <div className="empty__block">
                 
             </div> */}
             {/* <Route path="/" render={()=>{
               return <Header/>
             }}/> */}
-  
-            
+          <Switch>
+            <Route exact path="/" component={SimpleSlider}/>
+            <Route path="/blog-list" component={BlogList}/>
+            <Route path="/blog-editor" component={Editor}/>
+          </Switch>
+    
         </Layout>
     </div>
   );

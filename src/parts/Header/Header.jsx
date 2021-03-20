@@ -13,9 +13,9 @@ function Header() {
             </div>
             <ul className="nav list--reset">
                 <li className="nav__wrap"><NavLink to="/" exact className="nav__link link--reset"><FaGamepad/> Main menu </NavLink></li>
-                <li className="nav__wrap"><NavLink to="/blog" exact className="nav__link link--reset">Blog</NavLink></li>
+                <li className="nav__wrap"><NavLink to="/blog-list" exact className="nav__link link--reset">Blogs</NavLink></li>
                 <li className="nav__wrap"><NavLink to="/blog2" exact className="nav__link link--reset">Blog</NavLink></li>
-                <li className="nav__wrap"><NavLink to="/blog3" exact className="nav__link link--reset"><FaPlus/> Redact </NavLink></li>
+                <li className="nav__wrap"><NavLink to="/blog-editor" exact className="nav__link link--reset"><FaPlus/> Redact </NavLink></li>
                
             </ul>
             <div className="header__present">
