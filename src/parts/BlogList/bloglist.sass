@@ -1,5 +1,11 @@
+@import ../../mixins
 .blog
     padding-top: 50px
     &__container
         display: flex
-        justify-content: space-between
+        flex-direction: column
+        align-items: center
+        +media(528px)
+            flex-direction: row
+            justify-content: space-between
+

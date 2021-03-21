@@ -1,11 +1,18 @@
+@import ../../mixins
+
 .slider
     &__wrap
-        height: 70vh
+        height: 30vh
         width: 100%
+        +media(606px)
+            height: 60vh
+        +media(900px)
+            height: 70vh
     &__img
         width: 100%
         filter: brightness(90%)
         cursor: grab
+        object-fit: cover
 .slick-dots li.slick-active button:before
     color: #10ddb4
 .slick-dots li button:before

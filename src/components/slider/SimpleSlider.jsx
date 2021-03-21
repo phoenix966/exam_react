@@ -15,30 +15,24 @@ export default function SimpleSlider() {
     speed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,  //Temp false
     autoplaySpeed: 5000,
     adaptiveHeight: true,
   };
   return (
     <Slider {...settings}>
-      <div>
         <div className="slider__wrap">
           <img src={slide_one} alt="slide" className="slider__img"/>
         </div>
-        <h3 className='slider__title'>.</h3>
-      </div>
-      <div>
+        {/* <h3 className='slider__title'>.</h3> */}
         <div className="slider__wrap">
           <img src={slide_two} alt="slide" className="slider__img"/>
-          </div>
-          <h3 className="slider__title">.</h3>
-      </div>
-      <div>
+        </div>
+          {/* <h3 className="slider__title">.</h3> */}
         <div className="slider__wrap">
           <img src={slide_three} alt="slide" className="slider__img"/>
-          </div>
-          <h3 className="slider__title">.</h3>
-      </div>
+        </div>
+          {/* <h3 className="slider__title">.</h3> */}
     </Slider>
   );
 }

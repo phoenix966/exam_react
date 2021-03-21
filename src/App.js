@@ -2,7 +2,6 @@ import SimpleSlider from './components/slider/SimpleSlider'
 import './default.sass'
 import BlogList from './parts/BlogList/BlogList'
 import {Route,Switch} from 'react-router-dom'
-// import Header from './parts/Header/Header';
 import Layout from './parts/Layout/Layout'
 import Editor from './parts/Editor/Editor'
 
@@ -21,7 +20,9 @@ function App() {
           <Switch>
             <Route exact path="/" component={SimpleSlider}/>
             <Route path="/blog-list" component={BlogList}/>
-            <Route path="/blog-editor" component={Editor}/>
+            <Route path="/blog-editor" render={()=>{
+              return <Editor/>
+            }}/>
           </Switch>
     
         </Layout>

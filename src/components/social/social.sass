@@ -1,17 +1,25 @@
+@import ../../mixins
 .social
     border-top: 1px solid #fff
     background: #000
     &__list
         display: flex
+        flex-wrap: wrap
         justify-content: space-between
         align-items: center
         color: #fff
         font-family: 'Roboto-bold',sans-serif
     &__element
         display: flex
+        flex: 1 1 32%
+        padding: 10px
         align-items: center
         text-transform: uppercase
         font-size: 10px
+        +media(420px)
+            justify-content: center
+        +media(728px)
+            flex: 1 1 10%
         &:hover
             color: #10ddb4
             cursor: pointer
