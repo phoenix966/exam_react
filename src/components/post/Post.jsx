@@ -9,6 +9,9 @@ function Post(props) {
                 <ul className="post__list list--reset">
                     <li className="post__picture">
                         <img src={post} alt="info" className="post__img"/>
+                        <div className="post__remove" onClick={props.remove}>
+                            <FaTimesCircle/>
+                        </div>
                     </li>
                     <li className="post__date">{props.date}</li>
                     <li className="post__title">{props.title}</li>
@@ -23,9 +26,6 @@ function Post(props) {
                         <button className="post__btn btn">Read More</button>
                     </li>
                 </ul>
-                <div className="post__remove" onClick={props.remove}>
-                    <FaTimesCircle/>
-                </div>
         </div>
     )
 }

@@ -10,9 +10,24 @@
             height: 70vh
     &__img
         width: 100%
-        filter: brightness(90%)
+        // filter: brightness(95%)
         cursor: grab
         object-fit: cover
+    &__container
+        display: flex
+        justify-content: center
+        padding-top: 30px
+    &__action
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 5px
+        width: 100px
+        border: 1px solid #10ddb4
+        border-radius: 10px
+        & span
+            padding: 5px
+            cursor: pointer
 .slick-dots li.slick-active button:before
     color: #10ddb4
 .slick-dots li button:before

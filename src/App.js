@@ -4,6 +4,7 @@ import BlogList from './parts/BlogList/BlogList'
 import {Route,Switch} from 'react-router-dom'
 import Layout from './parts/Layout/Layout'
 import Editor from './parts/Editor/Editor'
+import Page from './components/postPage/Page'
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
             <Route path="/blog-editor" render={()=>{
               return <Editor/>
             }}/>
+            <Route path="/blog-page" component={Page}/>
           </Switch>
     
         </Layout>
