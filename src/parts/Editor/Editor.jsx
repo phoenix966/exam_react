@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import './editor.sass'
 import axios from '../../myAxiosInstance'
+import MyEditor from './MyEditor';
 
 // let empty = {
 //     title: '',
@@ -12,6 +13,7 @@ import axios from '../../myAxiosInstance'
 
 function Editor() {
 
+const [loading,setLoading] = useState(false);
 const [data,setData] = useState({
     title: '',
     author: '',
@@ -20,7 +22,6 @@ const [data,setData] = useState({
     date:'',
     key:''
 });
-const [loading,setLoading] = useState(false);
 
 let actionOnChange=(e)=>{
     let value = e.target.value;
@@ -43,6 +44,7 @@ let actionOnClick=(e)=>{
             setLoading(false);
         });
 }
+
     return (
         <div className="editor">
             <h2 className="editor__title">Create new post</h2>
@@ -58,7 +60,8 @@ let actionOnClick=(e)=>{
                         </div>
                         <div className="editor__wrap">
                             <div className="editor__wrapper">
-                                <textarea onChange={(e)=> actionOnChange(e)} name="text" className="editor__area" placeholder="Your new text for blog"></textarea>
+                                {/* <textarea onChange={(e)=> actionOnChange(e)} name="text" className="editor__area" placeholder="Your new text for blog"></textarea> */}
+                                <MyEditor/>
                             </div>
                         </div>
                     </div>
