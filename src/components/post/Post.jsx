@@ -2,8 +2,17 @@
 import './post.sass'
 import {FaStar,FaTimesCircle} from 'react-icons/fa'
 import post from './post.jpg'
-
+import {formatDate} from '../../utils/FormatDate'
 function Post(props) {
+    
+    let createMarkUp =()=>{
+        return {__html: `${props.text}`}
+    }
+    let createComponent=()=>{
+        return (
+            <div dangerouslySetInnerHTML={createMarkUp()}/>
+        )
+    }
     return (
         <div className="post">
                 <ul className="post__list list--reset">
@@ -13,7 +22,7 @@ function Post(props) {
                             <FaTimesCircle/>
                         </div>
                     </li>
-                    <li className="post__date">{props.date}</li>
+                    <li className="post__date">{formatDate(props.date)}</li>
                     <li className="post__title">{props.title}</li>
                     <li className="post__wrap">
                         <p className="post__text">{props.author}</p>
@@ -21,7 +30,7 @@ function Post(props) {
                         <p className="post__text">3 Comments</p>
                     </li>
                     <li className="post__element"><span><FaStar/><FaStar/><FaStar/><FaStar/></span><FaStar/></li>
-                    <li className="post__info">{props.text}</li>
+                    <li className="post__info">{createComponent()}</li>
                     <li className="post__buttons">
                         <button className="post__btn btn">Read More</button>
                     </li>

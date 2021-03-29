@@ -1,7 +1,9 @@
 import {useState} from 'react'
 import './editor.sass'
 import axios from '../../myAxiosInstance'
-import MyEditor from './MyEditor';
+
+import { Editor as Redactor } from '@tinymce/tinymce-react'; 
+// import { formatDate } from '../../utils/FormatDate';
 
 // let empty = {
 //     title: '',
@@ -23,6 +25,15 @@ const [data,setData] = useState({
     key:''
 });
 
+
+let handleEditorChange = (e) => {
+    let value = e.target.getContent()
+    setData((prev)=>{
+        let obj = {...prev};
+        obj.text = value;
+        return obj
+    })
+}
 let actionOnChange=(e)=>{
     let value = e.target.value;
     let input = e.target.name;
@@ -30,14 +41,14 @@ let actionOnChange=(e)=>{
         let obj = {...prev};
         obj[input] = value;
         return obj; 
-    })  
+    })
 }
 
 let actionOnClick=(e)=>{
     e.preventDefault();
     setLoading(true);
     let obj = {...data};
-    let date = new Date().toLocaleString();
+    let date = new Date().getTime()
     obj.date = date
     axios.post('/blog.json',obj)
         .finally(()=>{
@@ -60,8 +71,26 @@ let actionOnClick=(e)=>{
                         </div>
                         <div className="editor__wrap">
                             <div className="editor__wrapper">
-                                {/* <textarea onChange={(e)=> actionOnChange(e)} name="text" className="editor__area" placeholder="Your new text for blog"></textarea> */}
-                                <MyEditor/>
+                                <Redactor
+                                    initialValue="<p>Enter text for blog</p>"
+                                    init={{
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: [
+                                        'advlist autolink lists link image', 
+                                        'charmap print preview anchor help',
+                                        'searchreplace visualblocks code',
+                                        'insertdatetime media table paste wordcount'
+                                    ],
+                                    toolbar:
+                                        'undo redo | formatselect | bold italic | \
+                                        alignleft aligncenter alignright | \
+                                        bullist numlist outdent indent | help'
+                                    }}
+                                    onChange={(e)=> handleEditorChange(e)}
+                                    apiKey="iuklm3m9uwu2cyhbse1qxcx2l1j9rg7a7kzht1gldgjcrk1d"
+                                    init={{ /* your other settings */ }}
+                                />
                             </div>
                         </div>
                     </div>

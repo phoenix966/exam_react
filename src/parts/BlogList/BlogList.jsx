@@ -21,11 +21,7 @@ function BlogList() {
 
     let actionOnRemove=(key)=>{
         let infoState = [...info]
-        let index = infoState.findIndex((item) =>{
-            if(item.key === key){
-                return item
-            }
-        })
+        let index = infoState.findIndex((item) => item.key === key)
         infoState.splice(index,1)
         setInfo(infoState)
         axios.delete(`/blog/${key}.json`)

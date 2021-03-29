@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useState} from 'react';
 import './header.sass';
 import present from '../../assets/img/add.jpg';
 import logo from '../../assets/img/logo.png';
