@@ -3,7 +3,7 @@ import * as postAction from '../actions/ActionsTypes'
 const initialState = {
     blogs: [],
     loading: false,
-    bigPost: {}
+    bigPost: []
 }
 
 const reducer = (state = initialState,action) =>{

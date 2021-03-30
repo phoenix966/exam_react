@@ -1,6 +1,6 @@
 
 import './post.sass'
-import {FaStar,FaTimesCircle} from 'react-icons/fa'
+import {FaStar,FaTimesCircle,FaEdit} from 'react-icons/fa'
 import post from './post.jpg'
 import {formatDate} from '../../utils/FormatDate'
 import { Link } from 'react-router-dom'
@@ -24,6 +24,9 @@ function Post(props) {
                         <div className="post__remove" onClick={props.remove}>
                             <FaTimesCircle/>
                         </div>
+                        <div className="post__edit">
+                            <FaEdit/>
+                        </div>
                     </li>
                     <li className="post__date">{formatDate(props.date)}</li>
                     <li className="post__title">{props.title}</li>
@@ -35,7 +38,7 @@ function Post(props) {
                     <li className="post__element"><span><FaStar/><FaStar/><FaStar/><FaStar/></span><FaStar/></li>
                     <li className="post__info">{createComponent()}</li>
                     <li className="post__buttons">
-                        <Link onClick={props.click} to="/blog-page" className="post__btn btn">Read More</Link>
+                        <Link onClick={props.click} to={"/blog-list/" + props.id} className="post__btn">Read More</Link>
                     </li>
                 </ul>
         </div>

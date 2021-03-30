@@ -20,11 +20,11 @@ function App() {
             }}/> */}
           <Switch>
             <Route exact path="/" component={SimpleSlider}/>
-            <Route path="/blog-list" component={BlogList}/>
             <Route path="/blog-editor" render={()=>{
               return <Editor/>
             }}/>
-            <Route path="/blog-page" component={Page}/>
+            <Route path="/blog-list/:id" component={Page}/>
+            <Route path="/blog-list" component={BlogList}/>
           </Switch>
     
         </Layout>
