@@ -1,32 +1,43 @@
 import React from 'react'
 import './page.sass'
-import back from './back.jpg'
 import img from '../post/post.jpg'
 import Comment from '../comment/Comment'
 import ava_1 from '../../assets/img/ava_1.jpg'
 import ava_2 from '../../assets/img/ava_2.jpg'
+import {useSelector} from 'react-redux'
+import { formatDate } from '../../utils/FormatDate'
 
 function Page() {
+    const data = useSelector((state)=>state.bigPost) 
+    
+    let createMarkUp =()=>{
+        return {__html: `${data[0].text}`}
+    }
+    let createComponent=()=>{
+        return (
+            <div dangerouslySetInnerHTML={createMarkUp()}/>
+        )
+    }
+
     return (
         <div className="page">
-            <div className="page__header">
-                <img src={back} alt="back" className="page__img"/>
-                <h3 className="page__title page__title--mix">+ Blog page +</h3>
+            <div className="page__header"> 
+                <h3 className="page__title page__title--mix">Blog page:</h3>
             </div>
             <section className="page__body">
                 <div className="container">
                     <div className="page__picture">
                         <img src={img} alt="img" className="page__img"/>
                     </div>
-                    <p className="page__date">2021 March</p>
-                    <h1 className="page__title">Title</h1>
+                    <p className="page__date">{data[0] ? formatDate(data[0].date) : null}</p>
+                    <h1 className="page__title">{data[0] ? data[0].title : null}</h1>
                     <div className="page__wrap">
-                        <p className="page__text">ByAdmin</p>
+                        <p className="page__text">{data[0] ? data[0].author : null}</p>
                         <p className="page__text">in <a className="page__link" href="#games">Games</a></p>
                         <p className="page__text">2 comments</p>
                     </div>
                     <p className="page__info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut fugiat quibusdam doloribus maiores provident vero! Quidem reprehenderit tempore sed cum?
+                        {data[0] ? createComponent(): null}
                     </p>
                 </div>
             </section>

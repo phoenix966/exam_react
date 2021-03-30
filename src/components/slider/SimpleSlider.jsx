@@ -51,6 +51,7 @@ export default function SimpleSlider() {
       <Slider ref={sliderRef} {...settings}>
           <div className="slider__wrap">
             <img src={slide_one} alt="slide" className="slider__img"/>
+            {/* <h3 className="slider__title">lotr</h3> */}
           </div>
           {/* <h3 className='slider__title'>.</h3> */}
           <div className="slider__wrap">

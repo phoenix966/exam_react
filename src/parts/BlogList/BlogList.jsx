@@ -1,38 +1,35 @@
-import React, { useState,useEffect } from 'react'
+import {useEffect} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 import Post from '../../components/post/Post'
 import Sidebar from '../../components/sidebar/Sidebar'
 import './bloglist.sass'
-import axios from '../../myAxiosInstance'
+
+import { getPosts,postReadMore,removePost } from '../../store/actions/blogAction'
 
 function BlogList() {
-    const [info,setInfo] = useState([])
-
+    const info = useSelector((state)=> state.blogs)
+    const dispatch = useDispatch()
+    
     useEffect(()=>{
-        axios.get('/blog.json')
-            .then((response)=>{
-                let array = []
-                for(let key in response.data){
-                    response.data[key].key = key
-                    array.push(response.data[key])
-                }
-                setInfo(array)
-            })
+        dispatch(getPosts())
     },[])
 
-    let actionOnRemove=(key)=>{
-        let infoState = [...info]
-        let index = infoState.findIndex((item) => item.key === key)
-        infoState.splice(index,1)
-        setInfo(infoState)
-        axios.delete(`/blog/${key}.json`)
+    
+    const openMoreOnClick=(id)=>{
+        dispatch(postReadMore(id))
     }
+    
+
     return (
         <div className="blog">
+            <div className="blog__header">
+                <div className="blog__title">All blogs:</div>
+            </div>
             <div className="container blog__container">
                 <div className="blog__wrapper">
                     {info.map((item)=>{
                         return(
-                            <Post remove={()=>actionOnRemove(item.key)} key={item.key} title={item.title} author={item.author} text={item.text} date={item.date}/>
+                            <Post click={()=> openMoreOnClick(item.id)} remove={()=>dispatch(removePost(item.id))} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
                         )
                     })}
                 </div>

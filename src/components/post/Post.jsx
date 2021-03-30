@@ -3,6 +3,9 @@ import './post.sass'
 import {FaStar,FaTimesCircle} from 'react-icons/fa'
 import post from './post.jpg'
 import {formatDate} from '../../utils/FormatDate'
+import { Link } from 'react-router-dom'
+
+
 function Post(props) {
     
     let createMarkUp =()=>{
@@ -32,7 +35,7 @@ function Post(props) {
                     <li className="post__element"><span><FaStar/><FaStar/><FaStar/><FaStar/></span><FaStar/></li>
                     <li className="post__info">{createComponent()}</li>
                     <li className="post__buttons">
-                        <button className="post__btn btn">Read More</button>
+                        <Link onClick={props.click} to="/blog-page" className="post__btn btn">Read More</Link>
                     </li>
                 </ul>
         </div>

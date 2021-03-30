@@ -1,7 +1,8 @@
 @import ../../mixins
 .blog
-    padding-top: 50px
+    // padding-top: 83px
     &__container
+        padding-top: 50px
         display: flex
         flex-direction: column
         align-items: center
@@ -9,4 +10,17 @@
             align-items: flex-start
             flex-direction: row
             justify-content: space-between
-
+    &__header
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 100%
+        height: 25vh
+        background: url('../../assets/img/bg2.webp')
+        background-attachment: fixed
+    &__title
+        font-family: 'Roboto-bold',sans-serif
+        font-size: 1rem
+        color: #fff
+        +media(768px)
+            font-size: 2rem
