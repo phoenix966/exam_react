@@ -1,7 +1,7 @@
-import firebase from 'firebase';
-import './firebase/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-const firebaseConfig = {
+const config = {
     apiKey: "AIzaSyAiJ-PRe-xjfR3442505nffXol5A5RCAOA",
     authDomain: "exam-6e12f.firebaseapp.com",
     databaseURL: "https://exam-6e12f-default-rtdb.firebaseio.com",
@@ -11,6 +11,7 @@ const firebaseConfig = {
     appId: "1:853788848025:web:d7bd346730518992826d08"
   };
 
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(config);
+  export const auth = firebase.auth();
 
   export default firebase;

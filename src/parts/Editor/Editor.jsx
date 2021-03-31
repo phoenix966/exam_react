@@ -1,17 +1,9 @@
 import {useState} from 'react'
 import './editor.sass'
 import axios from '../../myAxiosInstance'
-
+import firebase, {auth} from '../../config/firebaseConfig'
 import { Editor as Redactor } from '@tinymce/tinymce-react'; 
-// import { formatDate } from '../../utils/FormatDate';
 
-// let empty = {
-//     title: '',
-//     author: '',
-//     text:'',
-//     img:'',
-//     date:''
-// }
 
 function Editor() {
 
@@ -24,7 +16,33 @@ const [data,setData] = useState({
     date:'',
     key:''
 });
+const [file,setFile] = useState(null)
+const [fileUrl,setFileUrl] = useState(null)
+const [progress,setProgress] = useState(0)
 
+const saveInStoreImg=(e)=>{
+    setFile(e.target.files[0]);
+}
+
+// const onFileUpload = (e) =>{
+//     e.preventDefault()
+//     const fileName = file.name;
+//     const storageRef = firebase.storage().ref('image/' + fileName);
+//     const uploadTask = storageRef.put(file);
+//     uploadTask.on('state_changed', (snapshot) => {
+//         //progress
+//         const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+//         setProgress(progress)
+//     }),
+//     (error) => {
+//         console.log(error);
+//     },
+//     ()=> {
+//         uploadTask.snapshot.ref.getDownloadURL().then(fileUrl =>{
+//             setFileUrl(fileUrl);
+//         })
+//     }
+// }
 
 let handleEditorChange = (e) => {
     let value = e.target.getContent()
@@ -50,6 +68,7 @@ let actionOnClick=(e)=>{
     let obj = {...data};
     let date = new Date().getTime()
     obj.date = date
+    obj.img = fileUrl
     axios.post('/blog.json',obj)
         .finally(()=>{
             setLoading(false);
@@ -77,10 +96,10 @@ let actionOnClick=(e)=>{
                                     height: 500,
                                     menubar: false,
                                     plugins: [
-                                        'advlist autolink lists link image', 
-                                        'charmap print preview anchor help',
-                                        'searchreplace visualblocks code',
-                                        'insertdatetime media table paste wordcount'
+                                        // 'advlist autolink lists link image', 
+                                        // 'charmap print preview anchor help',
+                                        // 'searchreplace visualblocks code',
+                                        // 'insertdatetime media table paste wordcount'
                                     ],
                                     toolbar:
                                         'undo redo | formatselect | bold italic | \
@@ -94,12 +113,15 @@ let actionOnClick=(e)=>{
                             </div>
                         </div>
                     </div>
-                    <div className="container editor__container--flex">
-                        <input id="files" name="file" type="file" className="editor--hidden" placeholder="Author"/>
-                        <button onClick={(e)=>actionOnClick(e)} className="editor__btn">Create blog</button>
-                        <label className="editor__label" htmlFor="files">Upload picture</label>
-                    </div>
                 </form>
+                    <div className="container editor__container--flex">
+                        <button onClick={(e)=>actionOnClick(e)} className="editor__btn">Create blog</button>
+                        {/* <form onSubmit={(e)=> onFileUpload(e)}> */}
+                            <input onChange={(e)=> saveInStoreImg(e)} id="files" name="file" type="file" className="editor--hidden" placeholder="Author"/>
+                            <label className="editor__label" htmlFor="files">Upload picture</label>
+                            <div className="editor__progress-bar">{progress}</div>
+                        {/* </form> */}
+                    </div>
             </div>
     )
 }

@@ -19,18 +19,16 @@ function Page() {
         if(data.length !== 0) {
             setPost(data[0]);
             setloading(false);
-            console.log('data has');
         } else {
             axios.get(`/blog/${id}.json`).then((response)=>{
                 setPost(response.data);
                 setloading(false);
-                console.log('request');
             })
         }
     }, [id, data])
 
     if(loading) {
-        return <h3>Loading...</h3>    
+        return <h3>Loading...</h3>  // прелоадер?  
     }
 
     return (
