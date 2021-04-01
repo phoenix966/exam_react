@@ -26,6 +26,16 @@ export const postReadMore = (id)=>{
         id
     }
 }
+export const loginTo = ()=>{
+    return {
+        type: postAction.LOGIN,
+    }
+}
+export const logOut = ()=>{
+    return {
+        type: postAction.LOG_OUT
+    }
+}
 // 1 + 2 ASYNC with thunk
 export const getPosts = ()=>{
     return (dispatch) => {

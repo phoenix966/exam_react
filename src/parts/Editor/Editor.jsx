@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import './editor.sass'
 import axios from '../../myAxiosInstance'
-import firebase, {auth} from '../../config/firebaseConfig'
-import { Editor as Redactor } from '@tinymce/tinymce-react'; 
+import firebase from '../../config/firebaseConfig'
+import { Editor as Redactor } from '@tinymce/tinymce-react';
+
 
 
 function Editor() {
@@ -20,29 +21,35 @@ const [file,setFile] = useState(null)
 const [fileUrl,setFileUrl] = useState(null)
 const [progress,setProgress] = useState(0)
 
+
 const saveInStoreImg=(e)=>{
     setFile(e.target.files[0]);
 }
 
-// const onFileUpload = (e) =>{
-//     e.preventDefault()
-//     const fileName = file.name;
-//     const storageRef = firebase.storage().ref('image/' + fileName);
-//     const uploadTask = storageRef.put(file);
-//     uploadTask.on('state_changed', (snapshot) => {
-//         //progress
-//         const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
-//         setProgress(progress)
-//     }),
-//     (error) => {
-//         console.log(error);
-//     },
-//     ()=> {
-//         uploadTask.snapshot.ref.getDownloadURL().then(fileUrl =>{
-//             setFileUrl(fileUrl);
-//         })
-//     }
-// }
+
+const onFileUpload = event => {
+    event.preventDefault();
+    const fileName = file.name;
+    const storageRef = firebase.storage().ref('images/' + fileName);
+    const uploadTask = storageRef.put(file);
+  
+    uploadTask.on('state_changed', (snapshot) => {
+          // progress
+          const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL()
+              .then(fileUrl => {
+                setFileUrl(fileUrl);
+              })
+        }
+    )
+  };
+  
 
 let handleEditorChange = (e) => {
     let value = e.target.getContent()
@@ -91,7 +98,7 @@ let actionOnClick=(e)=>{
                         <div className="editor__wrap">
                             <div className="editor__wrapper">
                                 <Redactor
-                                    initialValue="<p>Enter text for blog</p>"
+                                    initialValue={'<h1 style=\"text-align: center;\"><span style=\"color: #e03e2d;\">hello </span><strong>world&nbsp;</strong></h1>'}
                                     init={{
                                     height: 500,
                                     menubar: false,
@@ -113,16 +120,17 @@ let actionOnClick=(e)=>{
                             </div>
                         </div>
                     </div>
-                </form>
+                    </form>
                     <div className="container editor__container--flex">
-                        <button onClick={(e)=>actionOnClick(e)} className="editor__btn">Create blog</button>
-                        {/* <form onSubmit={(e)=> onFileUpload(e)}> */}
+                        <form onSubmit={(e)=> onFileUpload(e)}>
+                            <button onClick={(e)=>actionOnClick(e)} className="editor__btn">Create blog</button>
                             <input onChange={(e)=> saveInStoreImg(e)} id="files" name="file" type="file" className="editor--hidden" placeholder="Author"/>
-                            <label className="editor__label" htmlFor="files">Upload picture</label>
-                            <div className="editor__progress-bar">{progress}</div>
-                        {/* </form> */}
+                            <label className="editor__label" htmlFor="files">Browse</label>
+                            <button className="editor__btn">Upload on Store</button>
+                        </form>
+                            <div className="editor__progress-bar">{Math.round(progress) + '%'}</div>
                     </div>
-            </div>
+                </div>
     )
 }
 

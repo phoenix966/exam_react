@@ -29,7 +29,7 @@ function BlogList() {
                 <div className="blog__wrapper">
                     {info.map((item)=>{
                         return(
-                            <Post id={item.id} click={()=> openMoreOnClick(item.id)} remove={()=>dispatch(removePost(item.id))} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
+                            <Post id={item.id} click={()=> openMoreOnClick(item.id)} remove={()=>dispatch(removePost(item.id))} img={item.img} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
                         )
                     })}
                 </div>

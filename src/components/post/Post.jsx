@@ -1,7 +1,7 @@
 
 import './post.sass'
 import {FaStar,FaTimesCircle,FaEdit} from 'react-icons/fa'
-import post from './post.jpg'
+// import post from './post.jpg'
 import {formatDate} from '../../utils/FormatDate'
 import { Link } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ function Post(props) {
         <div className="post">
                 <ul className="post__list list--reset">
                     <li className="post__picture">
-                        <img src={post} alt="info" className="post__img"/>
+                        <img src={props.img} alt="info" className="post__img"/>
                         <div className="post__remove" onClick={props.remove}>
                             <FaTimesCircle/>
                         </div>

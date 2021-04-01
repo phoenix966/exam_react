@@ -1,8 +1,62 @@
-.modal
+.modal.active
+    display: flex
+    align-items: center
+    justify-content: center
     position: fixed
-    z-index: 999
+    z-index: 788
     width: 100%
-    min-height: 200vh
-    background: #777
+    min-height: 100vh
+    background: #020202ec
+    box-sizing: border-box
+.modal
+    display: none
+    z-index: -2
+    opacity: 100 
+
+    &__across
+        position: absolute
+        top: -20px
+        right: -25px
+        z-index: 900
+        color: #fff
+        font-size: 24px
+        &:hover
+            color: #e71818
+            cursor: pointer
+    &__window
+        position: relative
+        width: 340px
+        min-height: 200px
+        background: #fff
+        border-radius: 10px
     &__wrapper
+        display: flex
+        flex-direction: column
+        padding: 20% 10%
         overflow: hidden
+    &__wrap
+        padding: 5px
+    &__input
+        width: 100%
+        height: 20px
+        border-color: #dad2d2
+    &__row
+        display: flex
+        margin-bottom: 30px
+    &__buttons
+        display: flex
+        justify-content: center
+        align-items: center
+    &__btn
+        font-family: 'Roboto-regular',sans-serif
+        margin: 0 5px
+        border: none
+        padding: 10px 20px
+        background: #666
+        color: #fff
+        border-radius: 5px
+        &:hover
+            background: #0a8a74
+            cursor: pointer
+            
+

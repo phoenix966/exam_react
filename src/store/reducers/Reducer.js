@@ -3,7 +3,8 @@ import * as postAction from '../actions/ActionsTypes'
 const initialState = {
     blogs: [],
     loading: false,
-    bigPost: []
+    bigPost: [],
+    auth: false
 }
 
 const reducer = (state = initialState,action) =>{
@@ -44,6 +45,16 @@ const reducer = (state = initialState,action) =>{
                     }
                 })
         }
+        case postAction.LOGIN:
+            return {
+                ...state,
+                auth: true
+            }
+        case postAction.LOG_OUT:
+            return {
+                ...state,
+                auth: false
+            }
         
 
         default:

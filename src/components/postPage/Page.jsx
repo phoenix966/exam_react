@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import {useParams} from 'react-router-dom'
 import './page.sass'
-import img from '../post/post.jpg'
+// import img from '../post/post.jpg'
 import Comment from '../comment/Comment'
 import ava_1 from '../../assets/img/ava_1.jpg'
 import ava_2 from '../../assets/img/ava_2.jpg'
@@ -39,7 +39,7 @@ function Page() {
             <section className="page__body">
                 <div className="container">
                     <div className="page__picture">
-                        <img src={img} alt="img" className="page__img"/>
+                        <img src={post.img} alt="img" className="page__img"/>
                     </div>
                     <p className="page__date">{post ? formatDate(post.date) : null}</p>
                     <h1 className="page__title">{post ? post.title : null}</h1>
