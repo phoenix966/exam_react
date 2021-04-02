@@ -1,12 +1,14 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import './editor.sass'
 import axios from '../../myAxiosInstance'
 import firebase from '../../config/firebaseConfig'
 import { Editor as Redactor } from '@tinymce/tinymce-react';
+import {useSelector,useDispatch} from 'react-redux'
+import { editOff } from '../../store/actions/blogAction';
 
 
 
-function Editor() {
+function Editor(props) {
 
 const [loading,setLoading] = useState(false);
 const [data,setData] = useState({
@@ -20,7 +22,27 @@ const [data,setData] = useState({
 const [file,setFile] = useState(null)
 const [fileUrl,setFileUrl] = useState(null)
 const [progress,setProgress] = useState(0)
+const [response,setResponse] = useState({
+    text:''
+})
 
+const editToggle = useSelector((state)=>state.editToggle)
+const editId = useSelector((state)=>state.editId)
+const dispatch = useDispatch()
+
+
+
+useEffect(()=>{
+    if(editToggle){
+        axios.get(`/blog/${editId}.json`).then((response)=>{
+        // console.log(response);
+        setResponse(response.data)
+        setData(response.data)
+        setFileUrl(response.data.img)
+    })
+    }
+    
+},[editId])
 
 const saveInStoreImg=(e)=>{
     setFile(e.target.files[0]);
@@ -32,6 +54,7 @@ const onFileUpload = event => {
     const fileName = file.name;
     const storageRef = firebase.storage().ref('images/' + fileName);
     const uploadTask = storageRef.put(file);
+
   
     uploadTask.on('state_changed', (snapshot) => {
           // progress
@@ -71,17 +94,34 @@ let actionOnChange=(e)=>{
 
 let actionOnClick=(e)=>{
     e.preventDefault();
-    setLoading(true);
     let obj = {...data};
     let date = new Date().getTime()
-    obj.date = date
-    obj.img = fileUrl
-    axios.post('/blog.json',obj)
-        .finally(()=>{
-            setLoading(false);
-        });
+    switch(editToggle){
+        case false:
+            setLoading(true);
+            obj.date = date
+            obj.img = fileUrl
+            console.log('false');
+            axios.post('/blog.json',obj)
+                .finally(()=>{
+                    dispatch(editOff())
+                    setLoading(false);
+                });
+            break;
+        case true:
+            setLoading(true);
+            obj.date = date
+            obj.img = fileUrl
+            console.log('true');
+            axios.patch(`/blog/${editId}.json`,obj)
+                .finally(()=>{
+                    setLoading(false)
+                    dispatch(editOff())
+                })
+    } 
+    
+    
 }
-
     return (
         <div className="editor">
             <h2 className="editor__title">Create new post</h2>
@@ -89,16 +129,16 @@ let actionOnClick=(e)=>{
                     <div className="container editor__container">
                         <div className="editor__wrap">
                             <div className="editor__box">
-                                <input onChange={(e)=> actionOnChange(e)} name="title" type="text" className="editor__input" placeholder="Your title"/>
+                                <input onChange={(e)=> actionOnChange(e)} name="title" type="text" className="editor__input" placeholder={editToggle ? response.title : "Title"}/>
                             </div>
                             <div className="editor__box">
-                                <input onChange={(e)=> actionOnChange(e)} name="author" type="text" className="editor__input" placeholder="Author"/>
+                                <input onChange={(e)=> actionOnChange(e)} name="author" type="text" className="editor__input" placeholder={editToggle ? response.author : "Author"}/>
                             </div>
                         </div>
                         <div className="editor__wrap">
                             <div className="editor__wrapper">
                                 <Redactor
-                                    initialValue={'<h1 style=\"text-align: center;\"><span style=\"color: #e03e2d;\">hello </span><strong>world&nbsp;</strong></h1>'}
+                                    initialValue={editToggle ? response.text : 'Enter text'}
                                     init={{
                                     height: 500,
                                     menubar: false,

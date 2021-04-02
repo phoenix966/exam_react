@@ -4,7 +4,9 @@ const initialState = {
     blogs: [],
     loading: false,
     bigPost: [],
-    auth: false
+    auth: false,
+    editToggle: false,
+    editId: null
 }
 
 const reducer = (state = initialState,action) =>{
@@ -40,9 +42,8 @@ const reducer = (state = initialState,action) =>{
             return {
                 ...state,
                 bigPost: state.blogs.filter((item)=>{
-                    if(item.id === action.id){
-                        return item
-                    }
+                    // if(item.id === action.id){
+                        return item.id === action.id        
                 })
         }
         case postAction.LOGIN:
@@ -55,8 +56,21 @@ const reducer = (state = initialState,action) =>{
                 ...state,
                 auth: false
             }
-        
-
+        case postAction.EDIT_ON:
+            return {
+                ...state,
+                editToggle: true
+            }
+        case postAction.EDIT_OFF:
+            return {
+                ...state,
+                editToggle: false
+            }
+        case postAction.ADD_ID:
+            return{
+                ...state,
+                editId: action.id
+            }
         default:
             return state
     }

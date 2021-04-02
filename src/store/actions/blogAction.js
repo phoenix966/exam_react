@@ -28,12 +28,28 @@ export const postReadMore = (id)=>{
 }
 export const loginTo = ()=>{
     return {
-        type: postAction.LOGIN,
+        type: postAction.LOGIN
     }
 }
 export const logOut = ()=>{
     return {
         type: postAction.LOG_OUT
+    }
+}
+export const editOn = ()=>{
+    return {
+        type: postAction.EDIT_ON
+    }
+}
+export const editOff = ()=>{
+    return {
+        type: postAction.EDIT_OFF
+    }
+}
+export const addId = (id)=>{
+    return {
+        type: postAction.ADD_ID,
+        id
     }
 }
 // 1 + 2 ASYNC with thunk

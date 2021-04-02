@@ -24,7 +24,7 @@ function Post(props) {
                         <div className="post__remove" onClick={props.remove}>
                             <FaTimesCircle/>
                         </div>
-                        <div className="post__edit">
+                        <div className="post__edit" onClick={()=>props.edit(props.id)}>
                             <FaEdit/>
                         </div>
                     </li>

@@ -10,10 +10,6 @@ import {useSelector,useDispatch} from 'react-redux'
 import firebase, {auth} from '../../config/firebaseConfig'
 import {loginTo,logOut} from '../../store/actions/blogAction'
 
-// const emptyObject = {
-//     email:'',
-//     pass:''
-// }
 
 function Header() {
     const [OpenBurger,setOpenBurger] = useState(false);
@@ -23,6 +19,7 @@ function Header() {
         email:'',
         pass:''
     })
+    
     const login = useSelector((state)=> state.auth)
     const dispatch = useDispatch()
     

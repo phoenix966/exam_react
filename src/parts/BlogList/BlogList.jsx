@@ -3,10 +3,11 @@ import {useSelector,useDispatch} from 'react-redux'
 import Post from '../../components/post/Post'
 import Sidebar from '../../components/sidebar/Sidebar'
 import './bloglist.sass'
+// import axios from '../../myAxiosInstance'
 
-import { getPosts,postReadMore,removePost } from '../../store/actions/blogAction'
+import { addId, editOn, getPosts,postReadMore,removePost } from '../../store/actions/blogAction'
 
-function BlogList() {
+function BlogList(props) {
     const info = useSelector((state)=> state.blogs)
     const dispatch = useDispatch()
     
@@ -18,7 +19,15 @@ function BlogList() {
     const openMoreOnClick=(id)=>{
         dispatch(postReadMore(id))
     }
-    
+
+    const editOnClick=(id)=>{
+        // console.log(id);
+        dispatch(addId(id))
+        dispatch(editOn())
+        let url = `/blog-editor/${id}`
+        props.history.push(url)
+
+    }
 
     return (
         <div className="blog">
@@ -29,7 +38,7 @@ function BlogList() {
                 <div className="blog__wrapper">
                     {info.map((item)=>{
                         return(
-                            <Post id={item.id} click={()=> openMoreOnClick(item.id)} remove={()=>dispatch(removePost(item.id))} img={item.img} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
+                            <Post id={item.id} click={()=> openMoreOnClick(item.id)} edit={editOnClick} remove={()=>dispatch(removePost(item.id))} img={item.img} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
                         )
                     })}
                 </div>
