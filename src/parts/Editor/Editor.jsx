@@ -17,6 +17,7 @@ const [data,setData] = useState({
     author: '',
     text:'',
     img:'',
+    imgName:'',
     date:'',
     key:''
 });
@@ -40,7 +41,6 @@ const dispatch = useDispatch()
 useEffect(()=>{
     if(editToggle){
         axios.get(`/blog/${editId}.json`).then((response)=>{
-        // console.log(response);
         setResponse(response.data)
         setData(response.data)
         setFileUrl(response.data.img)
@@ -60,7 +60,13 @@ const saveInStoreImg=(e)=>{
 
 const onFileUpload = event => {
     event.preventDefault();
-    const fileName = file.name;
+    const key = new Date().getTime()
+    const randomKey = Math.round(Math.random() * 90 + 1)
+    const fileName = key + randomKey + file.name;
+    setData({
+        ...data,
+        imgName: fileName
+    })
     const storageRef = firebase.storage().ref('images/' + fileName);
     const uploadTask = storageRef.put(file);
 
@@ -81,7 +87,7 @@ const onFileUpload = event => {
                     ...disable,
                     create: false
                 })
-                },2000)
+                },1000)
                
               })
         }
@@ -116,7 +122,6 @@ let actionOnClick=(e)=>{
             setLoading(true);
             obj.date = date
             obj.img = fileUrl
-            console.log('false');
             axios.post('/blog.json',obj)
                 .finally(()=>{
                     dispatch(editOff())

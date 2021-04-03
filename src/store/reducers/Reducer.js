@@ -15,14 +15,13 @@ const reducer = (state = initialState,action) =>{
             return {
                 ...state,
                 loading: true
-                
             }
         case postAction.POST_SUCCESS:
             if(!action.data) return {...state, loading: false}
             return {
                 ...state,
                 loading: false,
-                blogs: Object.keys(action.data).map(key => { // {fsdfdsfs: {}, dkfskflksd: {}}
+                blogs: Object.keys(action.data).map(key => {
                     return {
                         ...action.data[key],
                         id: key
@@ -42,8 +41,7 @@ const reducer = (state = initialState,action) =>{
             return {
                 ...state,
                 bigPost: state.blogs.filter((item)=>{
-                    // if(item.id === action.id){
-                        return item.id === action.id        
+                    return item.id === action.id        
                 })
         }
         case postAction.LOGIN:

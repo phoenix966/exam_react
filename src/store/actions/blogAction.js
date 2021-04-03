@@ -1,5 +1,6 @@
 import * as postAction from './ActionsTypes'
 import axios from  '../../myAxiosInstance.js'
+import firebase from '../../config/firebaseConfig'
 // 1
 const postRequest = ()=>{
     return {
@@ -63,11 +64,22 @@ export const getPosts = ()=>{
 }
 
 
-export const removePost =(id)=>{
+export const removePost =(id,imgName)=>{
     return (dispatch) =>{
         dispatch(postRequest())
-        axios.delete(`/blog/${id}.json`).then(()=>{
+        axios.delete(`/blog/${id}.json`)
+        .then(()=>{
             dispatch(postRemove(id))
+        }).then(()=>{
+            const storageRef = firebase.storage().ref('images/' + imgName)
+                storageRef.delete()
+                .then(function() {
+                    // console.log('Удалено');
+                })
+                .catch(function(err) {
+                    console.log(err);
+                })
         })
+        
     }
 }

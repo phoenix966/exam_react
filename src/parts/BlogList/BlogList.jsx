@@ -5,13 +5,15 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import './bloglist.sass'
 
 import { addId, editOn, getPosts,postReadMore,removePost } from '../../store/actions/blogAction'
+import Preloader from '../../components/preloader/Preloader'
 
 function BlogList(props) {
     const info = useSelector((state)=> state.blogs)
     const dispatch = useDispatch()
-    
+    const loading = useSelector((state)=>state.loading)
+
     useEffect(()=>{
-        dispatch(getPosts())
+        dispatch(getPosts())  // Прелоадер и возможно звездочки
     },[dispatch])
 
     
@@ -25,6 +27,11 @@ function BlogList(props) {
         let url = `/blog-editor/${id}`
         props.history.push(url)
     }
+    const infoPost = info.map((item)=>{
+        return(
+            <Post id={item.id} click={()=> openMoreOnClick(item.id)} edit={editOnClick} remove={()=>dispatch(removePost(item.id,item.imgName))} img={item.img} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
+        )
+    }).reverse()
 
     return (
         <div className="blog">
@@ -33,11 +40,7 @@ function BlogList(props) {
             </div>
             <div className="container blog__container">
                 <div className="blog__wrapper">
-                    {info.map((item)=>{
-                        return(
-                            <Post id={item.id} click={()=> openMoreOnClick(item.id)} edit={editOnClick} remove={()=>dispatch(removePost(item.id))} img={item.img} key={item.id} title={item.title} author={item.author} text={item.text} date={item.date}/>
-                        )
-                    })}
+                    {loading ? <Preloader/> : infoPost}
                 </div>
                 <div className="blog__wrapper">
                     <Sidebar/>
