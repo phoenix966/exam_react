@@ -5,6 +5,7 @@ import firebase from '../../config/firebaseConfig'
 import { Editor as Redactor } from '@tinymce/tinymce-react';
 import {useSelector,useDispatch} from 'react-redux'
 import { editOff } from '../../store/actions/blogAction';
+import ProgressBar from '../../components/progress/ProgressBar';
 
 
 
@@ -19,11 +20,15 @@ const [data,setData] = useState({
     date:'',
     key:''
 });
+const [disable,setDisable] = useState({
+    create: true,
+    upload: true 
+})
 const [file,setFile] = useState(null)
 const [fileUrl,setFileUrl] = useState(null)
 const [progress,setProgress] = useState(0)
 const [response,setResponse] = useState({
-    text:''
+    text:'none'
 })
 
 const editToggle = useSelector((state)=>state.editToggle)
@@ -42,10 +47,14 @@ useEffect(()=>{
     })
     }
     
-},[editId])
+},[editId,editToggle])
 
 const saveInStoreImg=(e)=>{
     setFile(e.target.files[0]);
+    setDisable({
+        ...disable,
+        upload: false
+    })
 }
 
 
@@ -57,7 +66,6 @@ const onFileUpload = event => {
 
   
     uploadTask.on('state_changed', (snapshot) => {
-          // progress
           const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
           setProgress(progress);
         },
@@ -68,6 +76,13 @@ const onFileUpload = event => {
           uploadTask.snapshot.ref.getDownloadURL()
               .then(fileUrl => {
                 setFileUrl(fileUrl);
+                setTimeout(()=>{
+                     setDisable({
+                    ...disable,
+                    create: false
+                })
+                },2000)
+               
               })
         }
     )
@@ -115,8 +130,8 @@ let actionOnClick=(e)=>{
             console.log('true');
             axios.patch(`/blog/${editId}.json`,obj)
                 .finally(()=>{
-                    setLoading(false)
                     dispatch(editOff())
+                    setLoading(false)
                 })
     } 
     
@@ -162,13 +177,16 @@ let actionOnClick=(e)=>{
                     </div>
                     </form>
                     <div className="container editor__container--flex">
+                        <ProgressBar progress={progress}/>
+                    </div>
+                    <div className="container editor__container--flex">
                         <form onSubmit={(e)=> onFileUpload(e)}>
-                            <button onClick={(e)=>actionOnClick(e)} className="editor__btn">Create blog</button>
+                            <button onClick={(e)=>actionOnClick(e)} className={disable.create ? "editor__btn disable" : 'editor__btn btn--danger'} disabled={disable.create ? true : false}>Create blog</button>
                             <input onChange={(e)=> saveInStoreImg(e)} id="files" name="file" type="file" className="editor--hidden" placeholder="Author"/>
                             <label className="editor__label" htmlFor="files">Browse</label>
-                            <button className="editor__btn">Upload on Store</button>
+                            <button className={disable.upload ? "editor__btn disable" : 'editor__btn btn--sky'} disabled={disable.upload ? true : false}>Upload on Store</button>
                         </form>
-                            <div className="editor__progress-bar">{Math.round(progress) + '%'}</div>
+                            
                     </div>
                 </div>
     )

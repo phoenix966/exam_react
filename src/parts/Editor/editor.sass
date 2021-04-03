@@ -30,6 +30,7 @@
         width: 100%
         height: 100%
     &__btn
+        position: relative
         font-family: 'Roboto-bold',sans-serif
         padding: 10px 20px
         border: none
@@ -40,6 +41,10 @@
         font-size: 14px
         &:hover
             background: #1addc3
+            cursor: pointer
+        &.disable
+            background: #666
+            cursor: not-allowed
     &--hidden
         position: absolute
         z-index: -2
@@ -56,8 +61,12 @@
         margin: 0 10px
         &:hover
             background: #1addc3
-    &__progress-bar
-        font-family: 'Roboto-light',sans-serif
-        font-size: 2rem
-        font-weight: italic
-        color: #1addc3
+            cursor: pointer
+.btn
+    &--sky
+        &:hover
+            background: #e2e62c
+    &--danger
+        &:hover
+            background: #d30909
+        

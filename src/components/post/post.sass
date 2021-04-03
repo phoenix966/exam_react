@@ -43,6 +43,9 @@
     &__info
         font-family: 'Roboto-light',sans-serif
         font-size: 1rem
+        max-height: 188px
+        width: 80%
+        overflow: hidden
     &__buttons
         padding-top: 20px
     &__btn
@@ -86,4 +89,7 @@
         +media(528px)
             bottom: -43px
             right: -30px
-            
+        &.hide
+            display: none
+            z-index: -2
+            visibility: hidden

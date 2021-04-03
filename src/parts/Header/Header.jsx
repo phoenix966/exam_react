@@ -2,13 +2,13 @@ import {useState,useEffect} from 'react';
 import './header.sass';
 import present from '../../assets/img/present2.webp';
 import logo from '../../assets/img/logo.png';
-import {FaPlus,FaMagic,FaAngleUp,FaAsymmetrik,FaGhost,FaTimes} from 'react-icons/fa';
+import {FaPlus,FaAngleUp,FaAsymmetrik,FaGhost,FaTimes,FaAtom,FaBattleNet,FaDrupal} from 'react-icons/fa';
 import {NavLink} from 'react-router-dom';
 import MobileMenu from '../../components/mobile/MobileMenu';
 import Modal from '../../UI/modal/Modal';
 import {useSelector,useDispatch} from 'react-redux'
 import firebase, {auth} from '../../config/firebaseConfig'
-import {loginTo,logOut} from '../../store/actions/blogAction'
+import {editOff, loginTo,logOut} from '../../store/actions/blogAction'
 
 
 function Header() {
@@ -19,10 +19,10 @@ function Header() {
         email:'',
         pass:''
     })
-    
     const login = useSelector((state)=> state.auth)
     const dispatch = useDispatch()
-    
+    const [autorize,setAutorize] = useState(false)
+
     const authOnChange =(e)=>{
         e.preventDefault()
         let input = e.target.name
@@ -48,15 +48,17 @@ function Header() {
         auth.onAuthStateChanged(user=>{
             if(user){
                 dispatch(loginTo())
+                setAutorize(true)
             }
         })
-    }, [])
+    }, [dispatch])
     const onLogOut =(e)=>{
         e.preventDefault()
         firebase.auth().signOut()
             .then(()=>{
                 dispatch(logOut()) 
                 setModalShow(false)
+                setAutorize(false)
             })
     }
 
@@ -68,6 +70,9 @@ function Header() {
         modalShow ? setModalShow(false) : setModalShow(true)
     }
 
+    const editToggleOff=()=>{
+        dispatch(editOff())
+    }
     return (
     <>
         <Modal show={modalShow}>
@@ -96,11 +101,14 @@ function Header() {
             <span onClick={actionOnBurgerClick} className={OpenBurger ? 'header__elem opened' : 'header__elem'}><FaAngleUp/></span>
             <ul className="nav list--reset">
                 <li className="nav__wrap"><NavLink to="/" exact className="nav__link link--reset"><span><span className="nav__element"><FaAsymmetrik/></span>Main menu</span></NavLink></li>
-                <li className="nav__wrap"><NavLink to="/blog-list" exact className="nav__link link--reset"><span><span className="nav__element"><FaMagic/></span>Blogs</span></NavLink></li>
-                <li className={login ? "nav__wrap" : "nav__wrap hide"}><NavLink to="/blog-editor" exact className="nav__link link--reset"><span><span className="nav__element"><FaPlus/></span>Create post</span></NavLink></li>
-                <li className="nav__wrap"><a onClick={isOpen} href="#modal" className="nav__link link--reset"><span><span className="nav__element"><FaGhost/></span>Login</span></a></li>
+                <li className="nav__wrap"><NavLink onClick={editToggleOff} to="/blog-list" exact className="nav__link link--reset"><span><span className="nav__element"><FaBattleNet/></span>Blogs</span></NavLink></li>
+                <li className={login ? "nav__wrap" : "nav__wrap hide"}><NavLink onClick={editToggleOff} to="/blog-editor" exact className="nav__link link--reset"><span><span className="nav__element"><FaPlus/></span>Create post</span></NavLink></li>
+                <li className="nav__wrap"><a onClick={isOpen} href="#modal" className="nav__link link--reset"><span><span className="nav__element"><FaDrupal/></span>Login</span></a></li>
             </ul>
             <div className="header__present">
+                <p className="header__autorize">
+                {autorize ? `Authorized as Admin` : `User is't logged in`}<span>{autorize ? <FaAtom/> : <FaGhost/>}</span>
+                </p>
                 <img src={present} alt="present" className="header__img"/>
             </div>
             {OpenBurger ? <MobileMenu click={actionOnBurgerClick}/> : null}

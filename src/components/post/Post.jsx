@@ -1,12 +1,13 @@
 
 import './post.sass'
 import {FaStar,FaTimesCircle,FaEdit} from 'react-icons/fa'
-// import post from './post.jpg'
 import {formatDate} from '../../utils/FormatDate'
 import { Link } from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
 
 function Post(props) {
+    const auth = useSelector((state)=>state.auth)
     
     let createMarkUp =()=>{
         return {__html: `${props.text}`}
@@ -24,7 +25,7 @@ function Post(props) {
                         <div className="post__remove" onClick={props.remove}>
                             <FaTimesCircle/>
                         </div>
-                        <div className="post__edit" onClick={()=>props.edit(props.id)}>
+                        <div className={auth ? "post__edit" : "post__edit hide"} onClick={()=>props.edit(props.id)}>
                             <FaEdit/>
                         </div>
                     </li>

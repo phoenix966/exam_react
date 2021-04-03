@@ -20,19 +20,39 @@
         +media(1110px)
             padding: 0
     &__present
+        border-top-left-radius: 40px
+        border-bottom-left-radius: 40px
+        overflow: hidden
         position: absolute
         z-index: -2
         visibility: hidden
         +media(1110px)
-            position: unset
+            position: relative
             z-index: unset
-            width: 600px
+            flex-basis: 550px
             height: 90%
             visibility: visible
+    &__autorize
+        display: flex
+        align-items: center
+        position: absolute
+        background: #1d1c1cb4
+        padding: 5px 10px
+        border-radius: 15px
+        top: 9px
+        left: 10px
+        font-family: 'Roboto-bold',sans-serif
+        font-size: 10px
+        font-weight: bold
+        color: #1addc3
+        & span
+            padding: 2px
+            font-size: 17px
     &__img
         width: 100%
-        height: 90%
+        height: 100%
         vertical-align: middle
+        object-fit: cover
     &__elem
         font-size: 32px
         transition: .5s

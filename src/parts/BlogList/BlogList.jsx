@@ -3,7 +3,6 @@ import {useSelector,useDispatch} from 'react-redux'
 import Post from '../../components/post/Post'
 import Sidebar from '../../components/sidebar/Sidebar'
 import './bloglist.sass'
-// import axios from '../../myAxiosInstance'
 
 import { addId, editOn, getPosts,postReadMore,removePost } from '../../store/actions/blogAction'
 
@@ -13,7 +12,7 @@ function BlogList(props) {
     
     useEffect(()=>{
         dispatch(getPosts())
-    },[])
+    },[dispatch])
 
     
     const openMoreOnClick=(id)=>{
@@ -21,12 +20,10 @@ function BlogList(props) {
     }
 
     const editOnClick=(id)=>{
-        // console.log(id);
         dispatch(addId(id))
         dispatch(editOn())
         let url = `/blog-editor/${id}`
         props.history.push(url)
-
     }
 
     return (
