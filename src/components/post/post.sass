@@ -17,6 +17,7 @@
             width: 80%
     &__img
         width: 100%
+        border-radius: 10px
     &__date
         box-sizing: border-box
         padding: 5px 15px
@@ -55,17 +56,17 @@
         text-decoration: none
         box-sizing: border-box
         padding: 15px 35px
-        background: #36d30e
+        background: #1addc3
         color: #fff
         border-radius: 15%
         &:hover
-            background: #1addc3
+            background: #4fffe8
     &__element
         & span
             color: yellow
     &__remove
         position: absolute
-        top: -30px
+        top: -35px
         right: 0
         font-size: 24px
         color: #1addc3
@@ -76,10 +77,14 @@
         +media(528px)
             top: -25px
             right: -30px
+        &.hide
+            display: none
+            z-index: -2
+            visibility: hidden
     &__edit
         position: absolute
         bottom: -45px
-        right: -35px
+        right: -10px
         font-size: 32px
         color: #1addc3
         &:hover

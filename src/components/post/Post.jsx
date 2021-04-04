@@ -22,7 +22,7 @@ function Post(props) {
                 <ul className="post__list list--reset">
                     <li className="post__picture">
                         <img src={props.img} alt="info" className="post__img"/>
-                        <div className="post__remove" onClick={props.remove}>
+                        <div className={auth ? 'post__remove' : 'post__remove hide'} onClick={props.remove}>
                             <FaTimesCircle/>
                         </div>
                         <div className={auth ? "post__edit" : "post__edit hide"} onClick={()=>props.edit(props.id)}>

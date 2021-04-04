@@ -11,7 +11,7 @@ import ProgressBar from '../../components/progress/ProgressBar';
 
 function Editor(props) {
 
-const [loading,setLoading] = useState(false);
+// const [loading,setLoading] = useState(false);
 const [data,setData] = useState({
     title: '',
     author: '',
@@ -61,7 +61,7 @@ const saveInStoreImg=(e)=>{
 const onFileUpload = event => {
     event.preventDefault();
     const key = new Date().getTime()
-    const randomKey = Math.round(Math.random() * 90 + 1)
+    const randomKey = Math.random() * 90 + 1
     const fileName = key + randomKey + file.name;
     setData({
         ...data,
@@ -74,6 +74,10 @@ const onFileUpload = event => {
     uploadTask.on('state_changed', (snapshot) => {
           const progress = snapshot.bytesTransferred / snapshot.totalBytes * 100;
           setProgress(progress);
+          setDisable({
+              ...disable,
+              upload: true
+          })
         },
         (error) => {
           console.log(error);
@@ -82,9 +86,14 @@ const onFileUpload = event => {
           uploadTask.snapshot.ref.getDownloadURL()
               .then(fileUrl => {
                 setFileUrl(fileUrl);
+                // setDisable({
+                //     ...disable,
+                //     upload: true
+                // })
                 setTimeout(()=>{
                      setDisable({
                     ...disable,
+                    upload: true,
                     create: false
                 })
                 },1000)
@@ -115,28 +124,31 @@ let actionOnChange=(e)=>{
 
 let actionOnClick=(e)=>{
     e.preventDefault();
+    setDisable({
+        ...disable,
+        create: true
+    })
     let obj = {...data};
     let date = new Date().getTime()
     switch(editToggle){
         case false:
-            setLoading(true);
+            // setLoading(true);
             obj.date = date
             obj.img = fileUrl
             axios.post('/blog.json',obj)
                 .finally(()=>{
                     dispatch(editOff())
-                    setLoading(false);
+                    // setLoading(false);
                 });
             break;
         case true:
-            setLoading(true);
+            // setLoading(true);
             obj.date = date
             obj.img = fileUrl
-            console.log('true');
             axios.patch(`/blog/${editId}.json`,obj)
                 .finally(()=>{
                     dispatch(editOff())
-                    setLoading(false)
+                    // setLoading(false)
                 })
     } 
     
@@ -175,7 +187,9 @@ let actionOnClick=(e)=>{
                                     }}
                                     onChange={(e)=> handleEditorChange(e)}
                                     apiKey="iuklm3m9uwu2cyhbse1qxcx2l1j9rg7a7kzht1gldgjcrk1d"
-                                    init={{ /* your other settings */ }}
+                                    init={{
+                                        height: 240,
+                                    }}
                                 />
                             </div>
                         </div>

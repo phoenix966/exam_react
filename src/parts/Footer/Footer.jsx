@@ -8,7 +8,7 @@ import logo from '../../assets/img/logo.png'
 function Footer() {
     return (
     <>
-        <div className="footer">
+        <div className="footer footer--mix">
             <div className="container footer__container">
                 <div className="footer__wrap">
                     <div className="footer__logo">
