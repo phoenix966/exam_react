@@ -9,9 +9,9 @@ import ProgressBar from '../../components/progress/ProgressBar';
 
 
 
-function Editor(props) {
+function Editor() {
 
-// const [loading,setLoading] = useState(false);
+const [loading,setLoading] = useState(false);
 const [data,setData] = useState({
     title: '',
     author: '',
@@ -132,23 +132,23 @@ let actionOnClick=(e)=>{
     let date = new Date().getTime()
     switch(editToggle){
         case false:
-            // setLoading(true);
+            setLoading(true);
             obj.date = date
             obj.img = fileUrl
             axios.post('/blog.json',obj)
                 .finally(()=>{
                     dispatch(editOff())
-                    // setLoading(false);
+                    setLoading(false);
                 });
             break;
-        case true:
-            // setLoading(true);
+        default:
+            setLoading(true);
             obj.date = date
             obj.img = fileUrl
             axios.patch(`/blog/${editId}.json`,obj)
                 .finally(()=>{
                     dispatch(editOff())
-                    // setLoading(false)
+                    setLoading(false)
                 })
     } 
     
@@ -172,7 +172,7 @@ let actionOnClick=(e)=>{
                                 <Redactor
                                     initialValue={editToggle ? response.text : 'Enter text'}
                                     init={{
-                                    height: 500,
+                                    height: 240,
                                     menubar: false,
                                     plugins: [
                                         // 'advlist autolink lists link image', 
@@ -187,9 +187,9 @@ let actionOnClick=(e)=>{
                                     }}
                                     onChange={(e)=> handleEditorChange(e)}
                                     apiKey="iuklm3m9uwu2cyhbse1qxcx2l1j9rg7a7kzht1gldgjcrk1d"
-                                    init={{
-                                        height: 240,
-                                    }}
+                                    // init={{
+                                    //     // height: 240,
+                                    // }}
                                 />
                             </div>
                         </div>
