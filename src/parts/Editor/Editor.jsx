@@ -7,7 +7,6 @@ import {useSelector,useDispatch} from 'react-redux'
 import { editOff } from '../../store/actions/blogAction';
 import ProgressBar from '../../components/progress/ProgressBar';
 import Preloader from '../../components/preloader/Preloader';
-// import Modal from '../../UI/modal/Modal'
 
 
 
@@ -58,7 +57,7 @@ const saveInStoreImg=(e)=>{
         const storageRef = firebase.storage().ref('images/'+ editImgName)    /// здесь изменил
             storageRef.delete()
             .then(function() {
-                alert('Updated')
+                // alert('Updated')
             })
             .catch(function(err) {
                 console.log(err);
