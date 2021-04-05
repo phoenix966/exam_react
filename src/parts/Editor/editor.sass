@@ -10,6 +10,7 @@
         &--flex
             display: flex
             justify-content: center
+            flex-wrap: wrap
     &__wrap
         display: flex
         justify-content: space-between
@@ -35,6 +36,13 @@
     &__area
         width: 100%
         height: 100%
+    &__buttons
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        +media(528px)
+            display: unset
     &__btn
         position: relative
         font-family: 'Roboto-bold',sans-serif
@@ -43,8 +51,10 @@
         color: #fff
         background: #1addc3
         border-radius: 5px
-        margin: 0 10px
+        margin: 10px 10px
         font-size: 14px
+        +media(528px) 
+            padding: 10px 20px
         &:hover
             background: #1addc3
             cursor: pointer

@@ -1,9 +1,13 @@
 @import '../../mixins'
 .comment
     display: flex
-    width: 60%
+    // width: 60%
     justify-content: flex-start
     font-family: 'Roboto-light',sans-serif
+    padding: 0 10px
+    +media(728px)
+        padding: 0
+        width: 60%
     &--margin
         margin-bottom: 30px
     &__ava

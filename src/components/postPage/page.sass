@@ -15,17 +15,25 @@
         border-radius: 10px
         border: 3px solid #0c0c0c60
     &__body
-        min-height: 600px
+        min-height: 300px
+        padding: 0 10px
+        +media(728px)
+        padding: 0
+            min-height: 600px
     &__picture
-        width: 80%
+        width: 95%
+        +media(528px)
+            width: 80%
     &__date
         font-family: 'Roboto-bold',sans-serif
         font-size: 14px
         background: #1addc3
         color: #fff
         padding: 10px 25px
-        width: 30%
+        width: 80%
         text-align: center
+        +media(528px)
+            width: 30%
     &__wrap
         display: flex
     &__text
@@ -81,3 +89,7 @@
         border-radius: 5px
         &:hover
             background: #51dd1a
+.container
+    padding: 0 10px
+    +media(528px)
+        padding: 0

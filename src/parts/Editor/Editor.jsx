@@ -6,6 +6,8 @@ import { Editor as Redactor } from '@tinymce/tinymce-react';
 import {useSelector,useDispatch} from 'react-redux'
 import { editOff } from '../../store/actions/blogAction';
 import ProgressBar from '../../components/progress/ProgressBar';
+import Preloader from '../../components/preloader/Preloader';
+// import Modal from '../../UI/modal/Modal'
 
 
 
@@ -28,6 +30,7 @@ const [disable,setDisable] = useState({
 const [file,setFile] = useState(null)
 const [fileUrl,setFileUrl] = useState(null)
 const [progress,setProgress] = useState(0)
+const [editImgName,setEditImgName] = useState('')
 const [response,setResponse] = useState({
     text:'none'
 })
@@ -44,17 +47,35 @@ useEffect(()=>{
         setResponse(response.data)
         setData(response.data)
         setFileUrl(response.data.img)
+        setEditImgName(response.data.imgName)
     })
     }
     
 },[editId,editToggle])
 
 const saveInStoreImg=(e)=>{
-    setFile(e.target.files[0]);
-    setDisable({
-        ...disable,
-        upload: false
-    })
+    if(editToggle){
+        const storageRef = firebase.storage().ref('images/'+ editImgName)    /// здесь изменил
+            storageRef.delete()
+            .then(function() {
+                alert('Updated')
+            })
+            .catch(function(err) {
+                console.log(err);
+            })
+        setFile(e.target.files[0]);
+        setDisable({
+            ...disable,
+            upload: false
+            })    
+    } else{
+        setFile(e.target.files[0]);
+        setDisable({
+            ...disable,
+            upload: false
+            })   
+        }
+   
 }
 
 
@@ -86,10 +107,6 @@ const onFileUpload = event => {
           uploadTask.snapshot.ref.getDownloadURL()
               .then(fileUrl => {
                 setFileUrl(fileUrl);
-                // setDisable({
-                //     ...disable,
-                //     upload: true
-                // })
                 setTimeout(()=>{
                      setDisable({
                     ...disable,
@@ -156,7 +173,7 @@ let actionOnClick=(e)=>{
 }
     return (
         <div className="editor">
-            <h2 className="editor__title">Create new post</h2>
+            <h2 className="editor__title">{editToggle ? 'Edit this post' : 'Create new post'}</h2>
                 <form>
                     <div className="container editor__container">
                         <div className="editor__wrap">
@@ -172,8 +189,8 @@ let actionOnClick=(e)=>{
                                 <Redactor
                                     initialValue={editToggle ? response.text : 'Enter text'}
                                     init={{
-                                    height: 240,
-                                    menubar: false,
+                                    height: 210,
+                                    menubar: true,
                                     plugins: [
                                         // 'advlist autolink lists link image', 
                                         // 'charmap print preview anchor help',
@@ -181,9 +198,9 @@ let actionOnClick=(e)=>{
                                         // 'insertdatetime media table paste wordcount'
                                     ],
                                     toolbar:
-                                        'undo redo | formatselect | bold italic | \
+                                        `undo redo | formatselect | bold italic | \
                                         alignleft aligncenter alignright | \
-                                        bullist numlist outdent indent | help'
+                                        bullist numlist outdent indent | help`
                                     }}
                                     onChange={(e)=> handleEditorChange(e)}
                                     apiKey="iuklm3m9uwu2cyhbse1qxcx2l1j9rg7a7kzht1gldgjcrk1d"
@@ -200,13 +217,16 @@ let actionOnClick=(e)=>{
                     </div>
                     <div className="container editor__container--flex">
                         <form onSubmit={(e)=> onFileUpload(e)}>
-                            <button onClick={(e)=>actionOnClick(e)} className={disable.create ? "editor__btn disable" : 'editor__btn btn--danger'} disabled={disable.create ? true : false}>Create blog</button>
                             <input onChange={(e)=> saveInStoreImg(e)} id="files" name="file" type="file" className="editor--hidden" placeholder="Author"/>
-                            <label className="editor__label" htmlFor="files">Browse</label>
-                            <button className={disable.upload ? "editor__btn disable" : 'editor__btn btn--sky'} disabled={disable.upload ? true : false}>Upload on Store</button>
+                            <div className="editor__buttons">
+                                <button onClick={(e)=>actionOnClick(e)} className={disable.create ? "editor__btn disable" : 'editor__btn btn--danger'} disabled={disable.create ? true : false}>{editToggle ? 'Edit post' : 'Create post'}</button>
+                                <label className="editor__label" htmlFor="files">Browse</label>
+                                <button className={disable.upload ? "editor__btn disable" : 'editor__btn btn--sky'} disabled={disable.upload ? true : false}>Upload on Store</button>
+                            </div>
                         </form>
                             
                     </div>
+                    {loading ? <Preloader/> : null}
                 </div>
     )
 }
